@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="web.littlebobbyproject/src/main/java"/>
+	<classpathentry kind="src" path="web.littlebobbyproject/src/test/java"/>
+	<classpathentry kind="lib" path="web.littlebobbyproject/.mvn/wrapper/maven-wrapper.jar"/>
+	<classpathentry kind="output" path="web.littlebobbyproject/target/classes"/>
+</classpath>

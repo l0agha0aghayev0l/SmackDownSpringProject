@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>School Main</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="javascript:void(0)">Students</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mynavbar">
+      <ul class="navbar-nav ms-auto me-2">
+        <li class="nav-item">
+          <p class="nav-link m-0" data-bs-toggle="modal" data-bs-target="#myModal" style="cursor: pointer;">Add Student</p>
+        </li>
+      </ul>
+      <form class="d-flex" autocomplete="off" th:action="@{/school/student/search}">
+        <input class="form-control me-2" type="search" placeholder="Search" id="name" name="name">
+        <input class="btn btn-primary" type="submit" value="Search">
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-3 bg-light">
+	<table class="table">
+		<tr>
+			<th>Id</th>
+			<th>Full Name</th>
+			<th>Grade</th>
+			<th>School</th>
+			<th>Action</th>
+		</tr>
+		<tr th:each="st:${students}">
+			<td th:text="${st.id}"></td>
+			<td><a th:href="@{/school/student/{id} (id = ${st.id})}" th:text="${st.name} + ' ' + ${st.surname}"></a></td>
+			<td th:text="${st.grade}"></td>
+			<td th:text="${st.school}"></td>
+			<td> <a th:href="@{/school/student/remove/{id} (id = ${st.id})}" class="btn btn-danger">Delete</a></td>
+		</tr>
+	</table>
+</div>
+
+
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog modal-xl">
+  	<form th:action="@{/school/student/save}" th:method="POST" th:object="${student}" autocomplete="off">
+    	<div class="modal-content">
+
+      <!-- Modal Header -->
+      	<div class="modal-header">
+        	<h4 class="modal-title">Add Student</h4>
+        	<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      	</div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        
+        	<div class="row">
+        		<div class="col-6">
+        			<label for="name" class="form-label m-0">Name:</label>
+        			<input name="name" class="form-control" type="text" th:field="*{name}" placeholder="Input your name">
+        			<div style="font-size: 12px" class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>	
+        		</div>
+        		<div class="col-6">
+					<label for="surname" class="form-label m-0">Surname:</label>
+        			<input name="surname" class="form-control" type="text" th:field="*{surname}" placeholder="Input your surname"> 
+        			<div style="font-size: 12px" class="text-danger" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></div>       		
+        		</div>
+        	</div>
+        	
+        	<label for="birthday" class="form-label m-0 mt-3">Birthday:</label>
+        	<input name="birthday" class="form-control" th:field="*{birthday}" type="date">
+        	<div style="font-size: 12px" class="text-danger" th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}"></div>
+        	
+        	<label for="address" class="form-label m-0 mt-3">Address:</label>
+        	<input name="address" class="form-control" type="text" th:field="*{address}" placeholder="Input your address">
+        	<div style="font-size: 12px" class="text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
+        	
+        	<label for="grade" class="form-label m-0 mt-3">Grade:</label>
+        	<input name="grade" class="form-control" type="number" th:field="*{grade}" placeholder="Input your grade">
+        	<div style="font-size: 12px" class="text-danger" th:if="${#fields.hasErrors('grade')}" th:errors="*{grade}"></div>
+        	
+        	<label for="school" class="form-label m-0 mt-3">School:</label>
+        	<input name="school" class="form-control" type="text" th:field="*{school}" placeholder="Input your school">
+        	<div style="font-size: 12px" class="text-danger" th:if="${#fields.hasErrors('school')}" th:errors="*{school}"></div>
+        	
+        	<label for="description" class="form-label m-0 mt-3">Description:</label>
+        	<textarea class="form-control" rows="3" th:field="*{description}" name="description"></textarea>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+      	<button type="submit" class="btn btn-success" >Add Student</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+    </form>
+  </div>
+</div>
+
+</body>
+
+</html>
